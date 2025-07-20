@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "ancient_explosives:block/echo_tnt_pole",
+    "side": "ancient_explosives:block/echo_tnt_side",
+    "top": "ancient_explosives:block/echo_tnt_pole"
+  }
+}

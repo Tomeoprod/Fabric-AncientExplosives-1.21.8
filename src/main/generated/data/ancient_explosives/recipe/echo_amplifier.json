@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": "minecraft:amethyst_shard",
+    "d": "minecraft:deepslate",
+    "e": "ancient_explosives:echo_crystal",
+    "s": "minecraft:echo_shard"
+  },
+  "pattern": [
+    " a ",
+    "ses",
+    "ddd"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ancient_explosives:echo_amplifier"
+  }
+}

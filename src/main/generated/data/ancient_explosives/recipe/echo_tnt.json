@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "e": "minecraft:echo_shard",
+    "g": "minecraft:gunpowder",
+    "s": "minecraft:sand"
+  },
+  "pattern": [
+    "ese",
+    "sgs",
+    "ese"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ancient_explosives:echo_tnt"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "item.ancient_explosives.warden_chestplate": "Warden Chestplate",
+  "item.ancient_explosives.echo_amplifier": "Echo Amplifier",
+  "item.ancient_explosives.echo_shard_cluster": "Echo Shard Cluster",
+  "item.ancient_explosives.echo_crystal": "Echo Crystal",
+  "item.ancient_explosives.echo_tnt": "Echo TNT",
+  "item.ancient_explosives.warden_heart": "Warden Heart",
+
+
+  "itemgroup.tomeoprodssorcery.ancient_explosives": "Ancient Explosives",
+
+  "block.ancient_explosives.echo_crystal": "Echo Crystal",
+
+  "entity.ancient_explosives.echo_shard_cluster": "Echo Shard Cluster",
+
+  "subtitles.yay": "yay",
+  "subtitles.pop": "pop",
+
+  "death.attack.implode": "%1$s Imploded",
+  "death.attack.implode.player": "%1$s died whilst trying to escape %2$s",
+  "death.attack.implode.item": "%1$s was killed by %2$s using %3$s",
+  "death.attack.internal_bleeding": "%1$s died of internal bleeding",
+  "death.attack.internal_bleeding.player": "%1$s died of internal bleeding whilst trying to escape %2$s",
+  "death.attack.internal_bleeding.item": "%1$s was killed by %2$s using %3$s",
+
+  "effect.ancient_explosives.shards": "Shards",
+
+  "key.ancient_explosives.chestplate_activation": "Chestplate Activation",
+  "key.category.ancient_explosives": "Ancient Explosives",
+
+  "attribute.ancient_explosives.targeted": "Targeted",
+  "attribute.ancient_explosives.can_be_targeted": "Can Be Targeted",
+
+  "gamerule.fun_time": "Fun Time"
+}

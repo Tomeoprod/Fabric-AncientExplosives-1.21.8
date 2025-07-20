@@ -1,0 +1,9 @@
+// 1.21.7	-999999999-01-01T00:00:00	Ancient Explosives/Recipe Generator
+067158fe4c469e82141d5aa259aa104ce6925557 data/ancient_explosives/advancement/recipes/misc/echo_amplifier.json
+4f3e02ba91223c60d7cec2b885b5a660a4b9ef01 data/ancient_explosives/advancement/recipes/misc/echo_crystal.json
+92b0d55bd3c9370cf00b072712edc9fec5dfb8f5 data/ancient_explosives/advancement/recipes/misc/echo_shard_cluster.json
+dbd00d796546470c3403e28140dedf6c362e0f88 data/ancient_explosives/advancement/recipes/misc/echo_tnt.json
+c02f372a96121556f593fe4167b05c5b1f96cfc0 data/ancient_explosives/recipe/echo_amplifier.json
+6af41badaa2c0c62bb479aebd9f2b7122f5ae133 data/ancient_explosives/recipe/echo_crystal.json
+9b4166e450cfc1be73156096a5e00e75564b73d6 data/ancient_explosives/recipe/echo_shard_cluster.json
+3d51b7c2105f77aa2c1cbb511078a0fcf9865260 data/ancient_explosives/recipe/echo_tnt.json

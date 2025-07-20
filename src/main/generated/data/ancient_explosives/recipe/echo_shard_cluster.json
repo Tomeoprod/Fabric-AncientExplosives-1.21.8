@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": "minecraft:slime_ball",
+    "s": "minecraft:echo_shard"
+  },
+  "pattern": [
+    "   ",
+    " s ",
+    "sbs"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ancient_explosives:echo_shard_cluster"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "ancient_explosives:item/echo_amplifier"
+  }
+}

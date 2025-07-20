@@ -1,0 +1,20 @@
+{
+  "yay": {
+    "subtitle": "subtitles.yay",
+    "sounds": [
+      {
+        "name": "ancient_explosives:yay",
+        "stream": false
+      }
+    ]
+  },
+  "pop": {
+    "subtitle": "subtitles.pop",
+    "sounds": [
+      {
+        "name": "ancient_explosives:balloon-pop",
+        "stream": false
+      }
+    ]
+  }
+}

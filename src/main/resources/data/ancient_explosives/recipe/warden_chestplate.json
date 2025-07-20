@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "ancient_explosives:warden_heart",
+  "base": "minecraft:netherite_chestplate",
+  "result": {
+    "id": "ancient_explosives:warden_chestplate"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

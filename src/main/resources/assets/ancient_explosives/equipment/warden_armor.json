@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "ancient_explosives:warden_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "ancient_explosives:warden_armor"
+      }
+    ]
+  }
+}
