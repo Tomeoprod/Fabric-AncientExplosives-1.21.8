@@ -11,6 +11,18 @@ base {
 }
 
 repositories {
+	maven {
+		name = "Modrinth"
+		url = "https://api.modrinth.com/maven"
+		content {
+			includeGroup "maven.modrinth"
+		}
+	}
+
+	maven {
+		name = "Ladysnake Mods"
+		url = 'https://maven.ladysnake.org/releases'
+	}
 }
 
 fabricApi {
@@ -27,6 +39,11 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	modImplementation "maven.modrinth:coloredglowlib:3.2.1+1.21.5+nocca"
+	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:6.3.1")
+	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:6.3.1")
+	modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-scoreboard:6.3.1")
 }
 
 processResources {

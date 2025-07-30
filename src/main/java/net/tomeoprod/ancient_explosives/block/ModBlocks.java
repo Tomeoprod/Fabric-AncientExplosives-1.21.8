@@ -11,12 +11,13 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.tomeoprod.ancient_explosives.AncientExplosives;
+import net.tomeoprod.ancient_explosives.block.custom.EchoCrystalBlock;
 import net.tomeoprod.ancient_explosives.block.custom.EchoTntBlock;
 
 import java.util.function.Function;
 
 public class ModBlocks {
-    public static final Block ECHO_CRYSTAL = register("echo_crystal", Block::new, AbstractBlock.Settings.create().requiresTool().strength(1.5f).sounds(BlockSoundGroup.AMETHYST_BLOCK), true);
+    public static final Block ECHO_CRYSTAL = register("echo_crystal", EchoCrystalBlock::new, AbstractBlock.Settings.create().requiresTool().strength(1.5f).sounds(BlockSoundGroup.AMETHYST_BLOCK), true);
     public static final Block ECHO_TNT = register("echo_tnt", EchoTntBlock::new, AbstractBlock.Settings.create().sounds(BlockSoundGroup.GRASS).breakInstantly(), true);
 
     private static Block register(String name, Function<AbstractBlock.Settings, Block> blockFactory, AbstractBlock.Settings settings, boolean shouldRegisterItem) {

@@ -1,5 +1,6 @@
 package net.tomeoprod.ancient_explosives.networking.packet;
 
+import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.UseCooldownComponent;
@@ -24,6 +25,7 @@ import net.minecraft.util.math.Vec3d;
 import net.tomeoprod.ancient_explosives.AncientExplosives;
 import net.tomeoprod.ancient_explosives.component.ModComponents;
 import net.tomeoprod.ancient_explosives.item.ModItems;
+import net.tomeoprod.ancient_explosives.util.RenderUtils;
 
 import java.util.List;
 
@@ -63,7 +65,7 @@ public record ChestplateActivationC2SPacket(boolean test) implements CustomPaylo
             if (livingEntities != null) {
                 for (LivingEntity target : livingEntities) {
                     if (target != player && target.canTakeDamage()) {
-                        if (target.damage(serverWorld, serverWorld.getDamageSources().sonicBoom(player), 10.0F)) {
+                        if (target.damage(serverWorld, serverWorld.getDamageSources().sonicBoom(player), 15.0F)) {
                             double d = (double) 0.5F * ((double) 1.0F - target.getAttributeValue(EntityAttributes.KNOCKBACK_RESISTANCE));
                             double e = (double) 2.5F * ((double) 1.0F - target.getAttributeValue(EntityAttributes.KNOCKBACK_RESISTANCE));
                             target.addVelocity(vec3d3.getX() * e, vec3d3.getY() * d, vec3d3.getZ() * e);

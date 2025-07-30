@@ -2,15 +2,29 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
+      "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "ancient_explosives:warden_heart"
+          "name": "ancient_explosives:warden_heart",
+          "weight": 100
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "children": [],
+          "name": "minecraft:sculk_catalyst",
+          "weight": 100,
+          "functions": [],
+          "conditions": []
         }
       ],
-      "rolls": 1.0
+      "conditions": []
     }
   ],
-  "random_sequence": "minecraft:entities/warden"
+  "functions": []
 }
