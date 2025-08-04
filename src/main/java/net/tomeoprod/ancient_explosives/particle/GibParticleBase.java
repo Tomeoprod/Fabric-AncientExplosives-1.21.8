@@ -30,7 +30,7 @@ public class GibParticleBase extends SpriteBillboardParticle {
         super(clientWorld, x, y, z, xSpeed, ySpeed, zSpeed);
 
         this.gravityStrength = 1f;
-        this.scale = 0.1f + new Random().nextFloat(0.15f);
+        this.scale *= 1.25f + new Random().nextFloat(0.5f);
         this.maxAge = new Random().nextInt(100, 200);
         this.setSpriteForAge(spriteProvider);
 

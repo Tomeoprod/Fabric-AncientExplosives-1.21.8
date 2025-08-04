@@ -6,7 +6,7 @@ import net.minecraft.world.GameRules;
 
 public class ModGameRules {
     public static final GameRules.Key<GameRules.BooleanRule> FUN_TIME =
-            GameRuleRegistry.register("fun_time", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(false));
+            GameRuleRegistry.register("funTime", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(false));
 
     public static void register() {}
 }

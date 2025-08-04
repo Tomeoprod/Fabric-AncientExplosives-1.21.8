@@ -1,12 +1,15 @@
 package net.tomeoprod.ancient_explosives.item.custom;
 
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.NbtComponent;
 import net.minecraft.entity.*;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -21,6 +24,8 @@ import net.minecraft.world.World;
 import net.tomeoprod.ancient_explosives.block.ModBlocks;
 import net.tomeoprod.ancient_explosives.block.custom.EchoCrystalBlock;
 import net.tomeoprod.ancient_explosives.block.custom.EchoTntBlock;
+import net.tomeoprod.ancient_explosives.networking.packet.BlockOutlineRenderingS2CPacket;
+import net.tomeoprod.ancient_explosives.networking.packet.EntityOutlineRenderingS2CPacket;
 import net.tomeoprod.ancient_explosives.util.OutlineUtils;
 import net.tomeoprod.ancient_explosives.entity.custom.EchoShardClusterProjectileEntity;
 import net.tomeoprod.ancient_explosives.item.ModItems;
@@ -28,6 +33,7 @@ import net.tomeoprod.ancient_explosives.particle.ModParticles;
 import net.tomeoprod.ancient_explosives.util.ExplosionUtils;
 import net.tomeoprod.ancient_explosives.util.ModDamageTypes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -52,14 +58,16 @@ public class EchoAmplifierItem extends Item {
                             user.getY() + 30,
                             user.getZ() + 30
                     );
-                } else {radiusBox = new Box(
-                        user.getX() - 15,
-                        user.getY() - 15,
-                        user.getZ() - 15,
-                        user.getX() + 15,
-                        user.getY() + 15,
-                        user.getZ() + 15
-                );}
+                } else {
+                    radiusBox = new Box(
+                            user.getX() - 15,
+                            user.getY() - 15,
+                            user.getZ() - 15,
+                            user.getX() + 15,
+                            user.getY() + 15,
+                            user.getZ() + 15
+                    );
+                }
 
                 for (int x = (int) radiusBox.minX; x <= (int) radiusBox.maxX; x++) {
                     for (int y = (int) radiusBox.minY; y <= (int) radiusBox.maxY; y++) {
@@ -68,26 +76,21 @@ public class EchoAmplifierItem extends Item {
                             BlockState state = world.getBlockState(pos);
 
                             if (state.getBlock() instanceof EchoCrystalBlock || state.getBlock() instanceof EchoTntBlock) {
-                                OutlineUtils.addBlockGlow(60, pos, 48, 188, 188, 255);
+                                ServerPlayNetworking.send((ServerPlayerEntity) user, new BlockOutlineRenderingS2CPacket(60, x, y, z, 48, 188, 188));
                                 serverWorld.playSound(null, pos, SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.BLOCKS, 5, new Random().nextFloat(0.5f, 1.5f));
                             }
                         }
                     }
                 }
 
-                List<LivingEntity> vibratingEntities = serverWorld.getEntitiesByClass(LivingEntity.class, radiusBox, livingEntity -> true);
+                List<LivingEntity> vibratingEntities = world.getEntitiesByClass(LivingEntity.class, radiusBox, livingEntity -> true);
                 for (LivingEntity entity : vibratingEntities) {
-                    int echoShardClustersStuck = entity.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0);
-                    StatusEffectInstance glowing = new StatusEffectInstance(StatusEffects.GLOWING, 60, 255, true, false, false);
-
-                    if (entity != user && echoShardClustersStuck > 0) {
-                        OutlineUtils.addEntityGlow(60, entity);
-                        entity.addStatusEffect(glowing);
+                    if (entity.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0) > 0) {
+                        ServerPlayNetworking.send((ServerPlayerEntity) user, new EntityOutlineRenderingS2CPacket(60, entity.getId(), 48, 188, 188));
                         serverWorld.playSound(null, entity.getBlockPos(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.BLOCKS, 5, new Random().nextFloat(0.5f, 1.5f));
                     }
                 }
-
-            }else {
+            } else {
                 Vec3d playerPos = user.getPos().add(user.getAttachments().getPoint(EntityAttachmentType.WARDEN_CHEST, 0, user.getYaw()));
                 Vec3d vec3d2;
                 if (user.getEquippedStack(EquipmentSlot.CHEST).isOf(ModItems.WARDEN_CHESTPLATE)) {
@@ -180,16 +183,21 @@ public class EchoAmplifierItem extends Item {
                         if (target != user && echoShardClustersStuck > 0) {
                             if (target.getHealth() < 7 * echoShardClustersStuck) {
                                 ExplosionUtils.implode(target, serverWorld);
-                            } else
+                            } else {
+
                                 target.damage(serverWorld, serverWorld.getDamageSources().create(ModDamageTypes.IMPLODE_DAMAGE_KEY, user), 7 * echoShardClustersStuck);
+                                NbtCompound nbtCompound = new NbtCompound();
+                                nbtCompound.putInt("echo_shard_clusters_stuck", 0);
+                                target.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+                            }
                             ExplosionUtils.applyShards(target.getX(), target.getY(), target.getZ(), serverWorld, 14);
 
                             return ActionResult.SUCCESS;
                         }
                     }
                 }
+                user.incrementStat(Stats.USED.getOrCreateStat(this));
             }
-            user.incrementStat(Stats.USED.getOrCreateStat(this));
         }
         return ActionResult.PASS;
     }

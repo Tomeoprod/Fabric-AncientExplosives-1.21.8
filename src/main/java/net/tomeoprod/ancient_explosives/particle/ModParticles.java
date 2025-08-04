@@ -28,6 +28,9 @@ public class ModParticles {
     public static final SimpleParticleType SLIMEBALL_PARTICLE = registerParticle("slimeball_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType SNOW_PARTICLE = registerParticle("snow_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType WITHER_BONE_PARTICLE = registerParticle("wither_bone_particle", FabricParticleTypes.simple(true));
+    public static final SimpleParticleType PILLAGER_PARTICLE = registerParticle("pillager_particle", FabricParticleTypes.simple(true));
+    public static final SimpleParticleType GUARDIAN_PARTICLE = registerParticle("guardian_particle", FabricParticleTypes.simple(true));
+
     public static final SimpleParticleType SOUND_WAVE_PARTICLE = registerParticle("sound_wave_particle", FabricParticleTypes.simple(true));
 
     private static SimpleParticleType registerParticle(String name, SimpleParticleType particleType) {
@@ -56,6 +59,9 @@ public class ModParticles {
         ParticleFactoryRegistry.getInstance().register(ModParticles.SLIMEBALL_PARTICLE, GibParticleBase.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.SNOW_PARTICLE, GibParticleBase.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.WITHER_BONE_PARTICLE, GibParticleBase.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.PILLAGER_PARTICLE, GibParticleBase.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.GUARDIAN_PARTICLE, GibParticleBase.Factory::new);
+
         ParticleFactoryRegistry.getInstance().register(ModParticles.SOUND_WAVE_PARTICLE, SoundWaveParticle.Factory::new);
     }
 }

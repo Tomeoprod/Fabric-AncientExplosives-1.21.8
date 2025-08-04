@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MagmaCubeEntity;
 import net.minecraft.entity.mob.SlimeEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.server.world.ServerWorld;
@@ -33,23 +34,25 @@ public class ExplosionUtils {
         serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
         serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.NEUTRAL, 4f, 0.6f);
 
-        target.discard();
+        if (target instanceof PlayerEntity) {
+            target.kill(serverWorld);
+        } else target.discard();
     }
 
-    public static void implodeEffectBoss(LivingEntity target, ServerWorld serverWorld, SimpleParticleType particleType, int count) {
-        serverWorld.spawnParticles(particleType, target.getX(), target.getY(), target.getZ(), count, 0, 0.5, 0, 0.1);
-        serverWorld.spawnParticles(ModParticles.SCULK_PARTICLE, target.getX(), target.getY(), target.getZ(), 200 * target.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 1), 0, 0.5, 0, 0.1);
+    public static void funTimeImplodeEffect(LivingEntity target, ServerWorld serverWorld) {
+        serverWorld.spawnParticles(ModParticles.PAPER_PARTICLE, target.getX(), target.getY(), target.getZ(), 1000, 0, 0.5, 0, 0.1);
 
-        serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1f, 1.25f);
-        serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
-        serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.NEUTRAL, 4f, 0.6f);
+        serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), ModSounds.BALLOON_POP, SoundCategory.NEUTRAL, 1f, 1f);
+        serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), ModSounds.YAY, SoundCategory.NEUTRAL, 1f, 1f);
 
-        target.discard();
+        if (target instanceof PlayerEntity) {
+            target.kill(serverWorld);
+        } else target.discard();
     }
 
     public static void implode(LivingEntity target, ServerWorld serverWorld) {
         if (serverWorld.getGameRules().getBoolean(ModGameRules.FUN_TIME)) {
-            implodeEffect(target, serverWorld, ModParticles.PAPER_PARTICLE, 1000);
+            funTimeImplodeEffect(target, serverWorld);
         } else if (target.getType().equals(EntityType.ALLAY)) {
             implodeEffect(target, serverWorld, ModParticles.ALLAY_PARTICLE, 1000);
 
@@ -63,7 +66,7 @@ public class ExplosionUtils {
             implodeEffect(target, serverWorld, ModParticles.ENDERMAN_PARTICLE, 1000);
 
         } else if (target.getType().equals(EntityType.ENDER_DRAGON)) {
-            implodeEffectBoss(target, serverWorld, ModParticles.ENDERMAN_PARTICLE, 2000);
+            implodeEffect(target, serverWorld, ModParticles.ENDERMAN_PARTICLE, 2000);
 
         } else if (target.getType().equals(EntityType.CREEPER)) {
             implodeEffect(target, serverWorld, ModParticles.GUNPOWDER_PARTICLE, 1000);
@@ -84,7 +87,7 @@ public class ExplosionUtils {
             implodeEffect(target, serverWorld, ModParticles.ROTTEN_FLESH_PARTICLE, 1000);
 
         } else if (target.getType().equals(EntityType.WARDEN)) {
-            implodeEffectBoss(target, serverWorld, ModParticles.SCULK_PARTICLE, 2000);
+            implodeEffect(target, serverWorld, ModParticles.SCULK_PARTICLE, 2000);
 
         } else if (target.getType().equals(EntityType.TURTLE)) {
             implodeEffect(target, serverWorld, ModParticles.SHELL_PARTICLE, 1000);
@@ -100,6 +103,13 @@ public class ExplosionUtils {
 
         } else if (target.getType().equals(EntityType.WITHER) || target.getType().equals(EntityType.WITHER_SKELETON)) {
             implodeEffect(target, serverWorld, ModParticles.WITHER_BONE_PARTICLE, 1000);
+
+        } else if (target.getType().equals(EntityType.PILLAGER) || target.getType().equals(EntityType.VINDICATOR) || target.getType().equals(EntityType.EVOKER) || target.getType().equals(EntityType.RAVAGER)) {
+            implodeEffect(target, serverWorld, ModParticles.PILLAGER_PARTICLE, 500);
+            implodeEffect(target, serverWorld, ModParticles.MEAT_PARTICLE, 500);
+
+        } else if (target.getType().equals(EntityType.GUARDIAN) || target.getType().equals(EntityType.ELDER_GUARDIAN)) {
+            implodeEffect(target, serverWorld, ModParticles.GUARDIAN_PARTICLE, 1000);
 
         } else implodeEffect(target, serverWorld, ModParticles.MEAT_PARTICLE, 1000);
     }

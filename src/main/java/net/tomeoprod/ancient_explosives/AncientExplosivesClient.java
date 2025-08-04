@@ -7,6 +7,7 @@ import net.tomeoprod.ancient_explosives.entity.ModEntities;
 import net.tomeoprod.ancient_explosives.entity.client.EchoShardClusterProjectileModel;
 import net.tomeoprod.ancient_explosives.entity.client.EchoShardClusterProjectileRenderer;
 import net.tomeoprod.ancient_explosives.event.KeyInputHandler;
+import net.tomeoprod.ancient_explosives.item.custom.EchoAmplifierItem;
 import net.tomeoprod.ancient_explosives.networking.ModMessages;
 import net.tomeoprod.ancient_explosives.particle.ModParticles;
 

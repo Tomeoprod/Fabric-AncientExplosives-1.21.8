@@ -3,6 +3,8 @@ package net.tomeoprod.ancient_explosives;
 import net.fabricmc.api.ModInitializer;
 
 import net.tomeoprod.ancient_explosives.block.ModBlocks;
+import net.tomeoprod.ancient_explosives.item.custom.EchoAmplifierItem;
+import net.tomeoprod.ancient_explosives.util.ModSounds;
 import net.tomeoprod.ancient_explosives.util.OutlineUtils;
 import net.tomeoprod.ancient_explosives.component.ModComponents;
 import net.tomeoprod.ancient_explosives.effect.ModStatusEffects;
@@ -30,6 +32,7 @@ public class AncientExplosives implements ModInitializer {
 		ModEntities.registerModEntities();
 		ModGameRules.register();
 		ModStatusEffects.register();
+		ModSounds.initialize();
 
 		OutlineUtils.initializeTick();
 	}

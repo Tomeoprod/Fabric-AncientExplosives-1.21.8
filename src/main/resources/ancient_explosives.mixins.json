@@ -3,7 +3,8 @@
   "package": "net.tomeoprod.ancient_explosives.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-
+    "ShearMixin",
+    "SheepMixin"
   ],
   "injectors": {
     "defaultRequire": 1

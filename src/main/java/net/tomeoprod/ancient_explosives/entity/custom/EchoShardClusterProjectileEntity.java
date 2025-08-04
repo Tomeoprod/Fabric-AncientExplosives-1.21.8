@@ -12,6 +12,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.tomeoprod.ancient_explosives.AncientExplosives;
 import net.tomeoprod.ancient_explosives.component.ModComponents;
@@ -28,18 +30,23 @@ public class EchoShardClusterProjectileEntity extends PersistentProjectileEntity
     }
 
     @Override
+    protected Box calculateDefaultBoundingBox(Vec3d pos) {
+        return super.calculateDefaultBoundingBox(pos);
+    }
+
+    @Override
     protected ItemStack getDefaultItemStack() {
         return new ItemStack(ModItems.ECHO_SHARDS_CLUSTER);
     }
 
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
-        Entity entity = entityHitResult.getEntity();
         World world = this.getWorld();
-        NbtCompound nbtCompound = new NbtCompound();;
-        nbtCompound.putInt("echo_shard_clusters_stuck", entity.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0) + 1);
-
         if (!world.isClient) {
+            Entity entity = entityHitResult.getEntity();
+            NbtCompound nbtCompound = new NbtCompound();;
+            nbtCompound.putInt("echo_shard_clusters_stuck", entity.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0) + 1);
+
             entity.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
             world.sendEntityStatus(this, (byte) 3);
             this.discard();
