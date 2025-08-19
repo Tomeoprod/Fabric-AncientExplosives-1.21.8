@@ -1,14 +1,11 @@
 package net.tomeoprod.ancient_explosives.networking.packet;
 
-import net.minecraft.block.Block;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.network.packet.CustomPayload;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.BlockPos;
 import net.tomeoprod.ancient_explosives.AncientExplosives;
-import net.tomeoprod.ancient_explosives.util.OutlineUtils;
 
 public record BlockOutlineRenderingS2CPacket(int ticks, int x, int y, int z,  int r, int g, int b) implements CustomPayload{
     public static final Identifier BLOCK_OUTLINE_RENDERING_ID = Identifier.of(AncientExplosives.MOD_ID, "block_outline_rendering");

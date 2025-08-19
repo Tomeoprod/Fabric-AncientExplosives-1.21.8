@@ -5,18 +5,14 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.tomeoprod.ancient_explosives.effect.ModStatusEffects;
 import net.tomeoprod.ancient_explosives.networking.packet.ChestplateActivationC2SPacket;
 import net.tomeoprod.ancient_explosives.networking.packet.BlockOutlineRenderingS2CPacket;
 import net.tomeoprod.ancient_explosives.networking.packet.EntityOutlineRenderingS2CPacket;
 import net.tomeoprod.ancient_explosives.networking.packet.FlashRenderingS2CPacket;
-import net.tomeoprod.ancient_explosives.util.ExplosionUtils;
-import net.tomeoprod.ancient_explosives.util.ModSounds;
 import net.tomeoprod.ancient_explosives.util.OutlineUtils;
 import net.tomeoprod.ancient_explosives.util.RenderUtils;
 

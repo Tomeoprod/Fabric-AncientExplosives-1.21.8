@@ -12,7 +12,7 @@ import net.tomeoprod.ancient_explosives.block.ModBlocks;
 
 public class ModItemGroups {
 
-    public static final ItemGroup ALL_TOMEOPRODS_SORCERY_ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, Identifier.of(AncientExplosives.MOD_ID, "ancient_explosives"), FabricItemGroup.builder().icon(() -> new ItemStack(ModItems.WARDEN_HEART))
+    public static final ItemGroup ANCIENT_EXPLOSIVES_ITEM_GROUP = Registry.register(Registries.ITEM_GROUP, Identifier.of(AncientExplosives.MOD_ID, "ancient_explosives"), FabricItemGroup.builder().icon(() -> new ItemStack(ModItems.WARDEN_HEART))
             .displayName(Text.translatable("itemgroup.tomeoprodssorcery.ancient_explosives"))
             .entries((displayContext, entries) -> {
                 entries.add(ModItems.WARDEN_HEART);

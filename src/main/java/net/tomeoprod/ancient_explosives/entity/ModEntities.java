@@ -5,12 +5,10 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.tomeoprod.ancient_explosives.AncientExplosives;
 import net.tomeoprod.ancient_explosives.entity.custom.EchoShardClusterProjectileEntity;
 import net.tomeoprod.ancient_explosives.entity.custom.GlowingShardClusterProjectileEntity;
-import net.tomeoprod.ancient_explosives.item.custom.EchoAmplifierItem;
 
 public class ModEntities {
     public static final EntityType<EchoShardClusterProjectileEntity> ECHO_SHARD_CLUSTER = Registry.register(Registries.ENTITY_TYPE,

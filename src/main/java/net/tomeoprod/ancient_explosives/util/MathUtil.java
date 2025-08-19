@@ -38,10 +38,6 @@ public class MathUtil {
         ));
 
         // If ray hits before reaching entity, it's blocked
-        if (blockHit != null && blockHit.getPos().squaredDistanceTo(start) < end.squaredDistanceTo(start)) {
-            return false;
-        }
-
-        return true; // Entity is in FOV and not obstructed
+        return blockHit == null || !(blockHit.getPos().squaredDistanceTo(start) < end.squaredDistanceTo(start));// Entity is in FOV and not obstructed
     }
 }

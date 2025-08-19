@@ -18,7 +18,6 @@ import net.tomeoprod.ancient_explosives.item.custom.EchoAmplifierItem;
 import net.tomeoprod.ancient_explosives.item.custom.EchoShardClusterItem;
 import net.tomeoprod.ancient_explosives.item.custom.GlowingShardClusterItem;
 
-import javax.xml.crypto.Data;
 import java.util.function.Function;
 
 public class ModItems {
