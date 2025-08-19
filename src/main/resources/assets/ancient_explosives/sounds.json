@@ -8,11 +8,22 @@
       }
     ]
   },
+
   "balloon_pop": {
     "subtitle": "subtitles.pop",
     "sounds": [
       {
         "name": "ancient_explosives:balloon_pop",
+        "stream": false
+      }
+    ]
+  },
+
+  "ring": {
+    "subtitle": "subtitles.ring",
+    "sounds": [
+      {
+        "name": "ancient_explosives:ring",
         "stream": false
       }
     ]

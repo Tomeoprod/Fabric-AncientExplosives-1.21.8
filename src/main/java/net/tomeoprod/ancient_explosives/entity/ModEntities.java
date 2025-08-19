@@ -9,6 +9,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import net.tomeoprod.ancient_explosives.AncientExplosives;
 import net.tomeoprod.ancient_explosives.entity.custom.EchoShardClusterProjectileEntity;
+import net.tomeoprod.ancient_explosives.entity.custom.GlowingShardClusterProjectileEntity;
 import net.tomeoprod.ancient_explosives.item.custom.EchoAmplifierItem;
 
 public class ModEntities {
@@ -18,7 +19,14 @@ public class ModEntities {
                     .dimensions(0.5f, 1.15F)
                     .maxTrackingRange(4).trackingTickInterval(10).
                     build(RegistryKey.of(Registries.ENTITY_TYPE.getKey(), Identifier.of(AncientExplosives.MOD_ID, "echo_shard_cluster"))));
-
+                
+    public static final EntityType<GlowingShardClusterProjectileEntity> GLOWING_SHARD_CLUSTER = Registry.register(Registries.ENTITY_TYPE,
+            Identifier.of(AncientExplosives.MOD_ID, "glowing_shard_cluster"),
+            EntityType.Builder.<GlowingShardClusterProjectileEntity>create(GlowingShardClusterProjectileEntity::new, SpawnGroup.MISC)
+                    .dimensions(0.5f, 1.15F)
+                    .maxTrackingRange(4).trackingTickInterval(10).
+                    build(RegistryKey.of(Registries.ENTITY_TYPE.getKey(), Identifier.of(AncientExplosives.MOD_ID, "glowing_shard_cluster"))));
+            
 
     public static void registerModEntities() {}
 }

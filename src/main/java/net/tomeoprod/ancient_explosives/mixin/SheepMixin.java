@@ -20,6 +20,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+import net.tomeoprod.ancient_explosives.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -39,18 +40,36 @@ public abstract class SheepMixin extends AnimalEntity {
     public void interactMob(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         World world = player.getWorld();
         ItemStack stack = player.getStackInHand(hand);
-        int stuckShards = this.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0);
+        int stuckEchoShards = this.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0);
+        int stuckGlowingShards = this.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("glowing_shard_clusters_stuck", 0);
 
-        if (stack.isOf(Items.SHEARS) && stuckShards > 0) {
+        if (stack.isOf(Items.SHEARS) && stuckEchoShards > 0) {
             NbtCompound nbtCompound = new NbtCompound();
             nbtCompound.putInt("echo_shard_clusters_stuck", 0);
-            ItemStack shards = Items.ECHO_SHARD.getDefaultStack();
+            ItemStack echoShards = Items.ECHO_SHARD.getDefaultStack();
             ItemStack slimeBall = Items.SLIME_BALL.getDefaultStack();
 
-            shards.setCount(3 * stuckShards);
-            slimeBall.setCount(stuckShards);
+            echoShards.setCount(3 * stuckEchoShards);
+            slimeBall.setCount(stuckEchoShards);
 
-            world.spawnEntity(new ItemEntity(world, this.getX(), this.getY(), this.getZ(), shards));
+            world.spawnEntity(new ItemEntity(world, this.getX(), this.getY(), this.getZ(), echoShards));
+            world.spawnEntity(new ItemEntity(world, this.getX(), this.getY(), this.getZ(), slimeBall));
+
+            this.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+            world.playSound(null, this.getBlockPos(), SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.PLAYERS);
+            stack.damage(1, player);
+        }
+
+        if (stack.isOf(Items.SHEARS) && stuckGlowingShards > 0) {
+            NbtCompound nbtCompound = new NbtCompound();
+            nbtCompound.putInt("glowing_shard_clusters_stuck", 0);
+            ItemStack glowingShards = ModItems.GLOWING_SHARD.getDefaultStack();
+            ItemStack slimeBall = Items.SLIME_BALL.getDefaultStack();
+
+            glowingShards.setCount(3 * stuckGlowingShards);
+            slimeBall.setCount(stuckGlowingShards);
+
+            world.spawnEntity(new ItemEntity(world, this.getX(), this.getY(), this.getZ(), glowingShards));
             world.spawnEntity(new ItemEntity(world, this.getX(), this.getY(), this.getZ(), slimeBall));
 
             this.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));

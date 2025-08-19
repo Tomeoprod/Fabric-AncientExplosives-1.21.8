@@ -1,6 +1,9 @@
 package net.tomeoprod.ancient_explosives.util;
 
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.component.DataComponentTypes;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -10,12 +13,15 @@ import net.minecraft.entity.mob.SlimeEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.SimpleParticleType;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.tomeoprod.ancient_explosives.effect.ModStatusEffects;
+import net.tomeoprod.ancient_explosives.networking.packet.FlashRenderingS2CPacket;
 import net.tomeoprod.ancient_explosives.particle.ModParticles;
 
 import java.util.List;
@@ -25,10 +31,11 @@ public class ExplosionUtils {
     public static void implodeEffect(LivingEntity target, ServerWorld serverWorld, SimpleParticleType particleType, int count) {
         if (target instanceof SlimeEntity slimeEntity) {
             serverWorld.spawnParticles(particleType, target.getX(), target.getY(), target.getZ(), count * slimeEntity.getSize(), 0, 0.5, 0, 0.1);
-        }else if (target instanceof MagmaCubeEntity magmaCubeEntity) {
+        } else if (target instanceof MagmaCubeEntity magmaCubeEntity) {
             serverWorld.spawnParticles(particleType, target.getX(), target.getY(), target.getZ(), count * magmaCubeEntity.getSize(), 0, 0.5, 0, 0.1);
-        }else serverWorld.spawnParticles(particleType, target.getX(), target.getY(), target.getZ(), count, 0, 0.5, 0, 0.1);
-        serverWorld.spawnParticles(ModParticles.SCULK_PARTICLE, target.getX(), target.getY(), target.getZ(), 100 * target.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 1), 0, 0.5, 0, 0.1);
+        } else
+            serverWorld.spawnParticles(particleType, target.getX(), target.getY(), target.getZ(), count, 0, 0.5, 0, 0.1);
+        serverWorld.spawnParticles(ModParticles.ECHO_SHARD_PARTICLE, target.getX(), target.getY(), target.getZ(), 100 * target.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 1), 0, 0.5, 0, 0.1);
 
         serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1f, 1.25f);
         serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
@@ -87,7 +94,7 @@ public class ExplosionUtils {
             implodeEffect(target, serverWorld, ModParticles.ROTTEN_FLESH_PARTICLE, 1000);
 
         } else if (target.getType().equals(EntityType.WARDEN)) {
-            implodeEffect(target, serverWorld, ModParticles.SCULK_PARTICLE, 2000);
+            implodeEffect(target, serverWorld, ModParticles.ECHO_SHARD_PARTICLE, 2000);
 
         } else if (target.getType().equals(EntityType.TURTLE)) {
             implodeEffect(target, serverWorld, ModParticles.SHELL_PARTICLE, 1000);
@@ -157,6 +164,40 @@ public class ExplosionUtils {
             float damageDealt = (maxDamage * (float) distancePercent) / 100f;
 
             shardTarget.damage(serverWorld, serverWorld.getDamageSources().create(ModDamageTypes.INTERNAL_BLEEDING_DAMAGE_KEY), damageDealt);
+        }
+    }
+
+    public static void flashPlayer(PlayerEntity target, int duration) {
+        target.addStatusEffect(new StatusEffectInstance(
+                ModStatusEffects.STUNNED,
+                duration * 20,
+                1,
+                false,
+                false,
+                true
+        ));
+    }
+
+    public static void flashArea(Entity source) {
+        World world = source.getWorld();
+
+        Box box = new Box(
+                source.getX() - 64,
+                source.getY() - 64,
+                source.getZ() - 64,
+                source.getX() + 64,
+                source.getY() + 64,
+                source.getZ() + 64
+        );
+
+        List<PlayerEntity> players = world.getEntitiesByClass(PlayerEntity.class, box, playerEntity -> playerEntity != source);
+        for (PlayerEntity player : players) {
+            if (MathUtil.isEntityVisible(player, source)) {
+                double distance = Math.abs(64 - source.getPos().subtract(player.getPos()).length());
+                int duration = (int) (distance * 10) / 64;
+
+                flashPlayer(player, duration);
+            }
         }
     }
 }

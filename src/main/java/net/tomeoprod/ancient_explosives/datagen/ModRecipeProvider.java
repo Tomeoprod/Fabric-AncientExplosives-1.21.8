@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.equipment.trim.ArmorTrim;
 import net.minecraft.item.equipment.trim.ArmorTrimPatterns;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -36,7 +37,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(ModBlocks.ECHO_CRYSTAL.asItem()), conditionsFromItem(ModBlocks.ECHO_CRYSTAL.asItem()))
                         .offerTo(exporter);
 
-                createShaped(RecipeCategory.MISC, ModItems.ECHO_SHARDS_CLUSTER, 1)
+                createShaped(RecipeCategory.MISC, ModItems.ECHO_SHARDS_CLUSTER, 3)
                         .pattern("   ")
                         .pattern(" s ")
                         .pattern("sbs")
@@ -73,6 +74,41 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .criterion(hasItem(Items.GUNPOWDER), conditionsFromItem(Items.GUNPOWDER))
                         .criterion(hasItem(Items.SAND), conditionsFromItem(Items.SAND))
                         .criterion(hasItem(ModBlocks.ECHO_TNT.asItem()), conditionsFromItem(ModBlocks.ECHO_TNT.asItem()))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.MISC, ModItems.GLOWING_SHARDS_CLUSTER, 3)
+                        .pattern("   ")
+                        .pattern(" s ")
+                        .pattern("sbs")
+                        .input('s', ModItems.GLOWING_SHARD)
+                        .input('b', Items.SLIME_BALL)
+                        .criterion(hasItem(ModItems.GLOWING_SHARD), conditionsFromItem(ModItems.GLOWING_SHARD))
+                        .criterion(hasItem(Items.SLIME_BALL), conditionsFromItem(Items.SLIME_BALL))
+                        .criterion(hasItem(ModItems.GLOWING_SHARDS_CLUSTER), conditionsFromItem(ModItems.GLOWING_SHARDS_CLUSTER))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.MISC, ModItems.GLOWING_SHARD, 1)
+                        .pattern(" d ")
+                        .pattern("dsd")
+                        .pattern(" d ")
+                        .input('s', Items.ECHO_SHARD)
+                        .input('d', Items.GLOWSTONE_DUST)
+                        .criterion(hasItem(Items.ECHO_SHARD), conditionsFromItem(Items.ECHO_SHARD))
+                        .criterion(hasItem(Items.GLOWSTONE_DUST), conditionsFromItem(Items.GLOWSTONE_DUST))
+                        .criterion(hasItem(ModItems.GLOWING_SHARD), conditionsFromItem(ModItems.GLOWING_SHARD))
+                        .offerTo(exporter);
+
+                createShaped(RecipeCategory.MISC, ModItems.GOGGLES, 1)
+                        .pattern("sss")
+                        .pattern("s s")
+                        .pattern("glg")
+                        .input('s', Items.STRING)
+                        .input('g', Items.TINTED_GLASS)
+                        .input('l', Items.LEATHER)
+                        .criterion(hasItem(Items.STRING), conditionsFromItem(Items.STRING))
+                        .criterion(hasItem(Items.TINTED_GLASS), conditionsFromItem(Items.TINTED_GLASS))
+                        .criterion(hasItem(Items.LEATHER), conditionsFromItem(Items.LEATHER))
+                        .criterion(hasItem(ModItems.GOGGLES), conditionsFromItem(ModItems.GOGGLES))
                         .offerTo(exporter);
             }
         };

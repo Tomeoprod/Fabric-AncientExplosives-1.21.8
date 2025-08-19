@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "ancient_explosives:goggles"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "ancient_explosives:goggles"
+      }
+    ]
+  }
+}

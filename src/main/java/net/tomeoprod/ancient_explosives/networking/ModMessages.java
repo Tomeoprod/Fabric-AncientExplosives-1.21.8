@@ -1,16 +1,24 @@
 package net.tomeoprod.ancient_explosives.networking;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.tomeoprod.ancient_explosives.effect.ModStatusEffects;
 import net.tomeoprod.ancient_explosives.networking.packet.ChestplateActivationC2SPacket;
 import net.tomeoprod.ancient_explosives.networking.packet.BlockOutlineRenderingS2CPacket;
 import net.tomeoprod.ancient_explosives.networking.packet.EntityOutlineRenderingS2CPacket;
+import net.tomeoprod.ancient_explosives.networking.packet.FlashRenderingS2CPacket;
+import net.tomeoprod.ancient_explosives.util.ExplosionUtils;
+import net.tomeoprod.ancient_explosives.util.ModSounds;
 import net.tomeoprod.ancient_explosives.util.OutlineUtils;
+import net.tomeoprod.ancient_explosives.util.RenderUtils;
 
 public class ModMessages {
     public static void registerC2SPackets() {
@@ -47,6 +55,25 @@ public class ModMessages {
             int b = entityOutlineRenderingS2CPacket.b();
 
             OutlineUtils.addEntityGlow(ticks, entity, r, g, b);
+        });
+
+        PayloadTypeRegistry.playS2C().register(FlashRenderingS2CPacket.ID, FlashRenderingS2CPacket.CODEC);
+
+        ClientPlayNetworking.registerGlobalReceiver(FlashRenderingS2CPacket.ID, (flashRenderingS2CPacket, context) -> {
+            PlayerEntity player = (PlayerEntity) context.player().getWorld().getEntityById(flashRenderingS2CPacket.entityId());
+
+            HudRenderCallback.EVENT.register((drawContext, tickDeltaManager) -> {
+                int alpha;
+
+                if (player.getStatusEffect(ModStatusEffects.STUNNED) != null) {
+                    int iduration = player.getStatusEffect(ModStatusEffects.STUNNED).getDuration();
+                    if (iduration > 60) {
+                        alpha = 255;
+                    }else alpha = (iduration * 100) / 60;
+                } else alpha = 0;
+
+                drawContext.fill(0, 0, 8000, 8000, RenderUtils.rgbaToInt(255,255,255, alpha));
+            });
         });
     }
 }

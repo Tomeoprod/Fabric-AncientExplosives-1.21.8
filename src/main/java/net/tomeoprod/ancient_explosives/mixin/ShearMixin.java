@@ -28,23 +28,43 @@ public class ShearMixin extends Item {
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
         World world = user.getWorld();
-        int stuckShards = entity.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0);
+        int stuckEchoShards = entity.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0);
+        int stuckGlowingShards = entity.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("glowing_shard_clusters_stuck", 0);
 
-        if (stuckShards > 0) {
-            NbtCompound nbtCompound = new NbtCompound();
-            nbtCompound.putInt("echo_shard_clusters_stuck", 0);
-            ItemStack shards = Items.ECHO_SHARD.getDefaultStack();
-            ItemStack slimeBall = Items.SLIME_BALL.getDefaultStack();
+        if (stuckGlowingShards > 0 || stuckEchoShards > 0) {
+            if (stuckEchoShards > 0) {
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putInt("echo_shard_clusters_stuck", 0);
+                ItemStack echoShards = Items.ECHO_SHARD.getDefaultStack();
+                ItemStack slimeBall = Items.SLIME_BALL.getDefaultStack();
 
-            shards.setCount(3 * stuckShards);
-            slimeBall.setCount(stuckShards);
+                echoShards.setCount(3 * stuckEchoShards);
+                slimeBall.setCount(stuckEchoShards);
 
-            world.spawnEntity(new ItemEntity(world, user.getX(), user.getY(), user.getZ(), shards));
-            world.spawnEntity(new ItemEntity(world, user.getX(), user.getY(), user.getZ(), slimeBall));
+                world.spawnEntity(new ItemEntity(world, user.getX(), user.getY(), user.getZ(), echoShards));
+                world.spawnEntity(new ItemEntity(world, user.getX(), user.getY(), user.getZ(), slimeBall));
 
-            entity.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
-            world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.PLAYERS);
-            stack.damage(1, user);
+                entity.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+                world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.PLAYERS);
+                stack.damage(1, user);
+            }
+
+            if (stuckGlowingShards > 0) {
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putInt("echo_shard_clusters_stuck", 0);
+                ItemStack glowingShards = Items.ECHO_SHARD.getDefaultStack();
+                ItemStack slimeBall = Items.SLIME_BALL.getDefaultStack();
+
+                glowingShards.setCount(3 * stuckEchoShards);
+                slimeBall.setCount(stuckEchoShards);
+
+                world.spawnEntity(new ItemEntity(world, user.getX(), user.getY(), user.getZ(), glowingShards));
+                world.spawnEntity(new ItemEntity(world, user.getX(), user.getY(), user.getZ(), slimeBall));
+
+                entity.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
+                world.playSound(null, user.getBlockPos(), SoundEvents.BLOCK_BEEHIVE_SHEAR, SoundCategory.PLAYERS);
+                stack.damage(1, user);
+            }
 
             return ActionResult.SUCCESS;
         }

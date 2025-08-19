@@ -11,8 +11,8 @@ import net.tomeoprod.ancient_explosives.AncientExplosives;
 import net.tomeoprod.ancient_explosives.util.OutlineUtils;
 
 public record BlockOutlineRenderingS2CPacket(int ticks, int x, int y, int z,  int r, int g, int b) implements CustomPayload{
-    public static final Identifier CHESTPLATE_ACTIVATION_ID = Identifier.of(AncientExplosives.MOD_ID, "block_outline_rendering");
-    public static final Id<BlockOutlineRenderingS2CPacket> ID = new Id<>(CHESTPLATE_ACTIVATION_ID);
+    public static final Identifier BLOCK_OUTLINE_RENDERING_ID = Identifier.of(AncientExplosives.MOD_ID, "block_outline_rendering");
+    public static final Id<BlockOutlineRenderingS2CPacket> ID = new Id<>(BLOCK_OUTLINE_RENDERING_ID);
     public static final PacketCodec<RegistryByteBuf, BlockOutlineRenderingS2CPacket> CODEC = PacketCodec.tuple(
             PacketCodecs.INTEGER, BlockOutlineRenderingS2CPacket::ticks,
             PacketCodecs.INTEGER, BlockOutlineRenderingS2CPacket::x,

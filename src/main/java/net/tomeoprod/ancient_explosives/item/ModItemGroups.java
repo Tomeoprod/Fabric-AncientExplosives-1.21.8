@@ -21,6 +21,9 @@ public class ModItemGroups {
                 entries.add(ModBlocks.ECHO_CRYSTAL.asItem());
                 entries.add(ModBlocks.ECHO_TNT.asItem());
                 entries.add(ModItems.ECHO_SHARDS_CLUSTER);
+                entries.add(ModItems.GLOWING_SHARD);
+                entries.add(ModItems.GLOWING_SHARDS_CLUSTER);
+                entries.add(ModItems.GOGGLES);
             }).build());
 
     public static void registerItemGroups() {

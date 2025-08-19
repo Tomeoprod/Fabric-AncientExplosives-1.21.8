@@ -2,7 +2,6 @@ package net.tomeoprod.ancient_explosives.particle;
 
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.client.particle.EndRodParticle;
 import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -22,7 +21,7 @@ public class ModParticles {
     public static final SimpleParticleType MEMBRANE_PARTICLE = registerParticle("membrane_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType PAPER_PARTICLE = registerParticle("paper_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType ROTTEN_FLESH_PARTICLE = registerParticle("rotten_flesh_particle", FabricParticleTypes.simple(true));
-    public static final SimpleParticleType SCULK_PARTICLE = registerParticle("sculk_particle", FabricParticleTypes.simple(true));
+    public static final SimpleParticleType ECHO_SHARD_PARTICLE = registerParticle("sculk_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType SHELL_PARTICLE = registerParticle("shell_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType SHULKER_PARTICLE = registerParticle("shulker_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType SLIMEBALL_PARTICLE = registerParticle("slimeball_particle", FabricParticleTypes.simple(true));
@@ -30,8 +29,7 @@ public class ModParticles {
     public static final SimpleParticleType WITHER_BONE_PARTICLE = registerParticle("wither_bone_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType PILLAGER_PARTICLE = registerParticle("pillager_particle", FabricParticleTypes.simple(true));
     public static final SimpleParticleType GUARDIAN_PARTICLE = registerParticle("guardian_particle", FabricParticleTypes.simple(true));
-
-    public static final SimpleParticleType SOUND_WAVE_PARTICLE = registerParticle("sound_wave_particle", FabricParticleTypes.simple(true));
+    public static final SimpleParticleType GLOWING_SHARD_PARTICLE = registerParticle("glowing_shard_particle", FabricParticleTypes.simple(true));
 
     private static SimpleParticleType registerParticle(String name, SimpleParticleType particleType) {
         return Registry.register(Registries.PARTICLE_TYPE, Identifier.of(AncientExplosives.MOD_ID, name), particleType);
@@ -53,7 +51,7 @@ public class ModParticles {
         ParticleFactoryRegistry.getInstance().register(ModParticles.MEMBRANE_PARTICLE, GibParticleBase.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.PAPER_PARTICLE, PaperParticle.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.ROTTEN_FLESH_PARTICLE, GibParticleBase.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(ModParticles.SCULK_PARTICLE, GibParticleBase.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.ECHO_SHARD_PARTICLE, GibParticleBase.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.SHELL_PARTICLE, GibParticleBase.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.SHULKER_PARTICLE, GibParticleBase.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.SLIMEBALL_PARTICLE, GibParticleBase.Factory::new);
@@ -61,7 +59,6 @@ public class ModParticles {
         ParticleFactoryRegistry.getInstance().register(ModParticles.WITHER_BONE_PARTICLE, GibParticleBase.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.PILLAGER_PARTICLE, GibParticleBase.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.GUARDIAN_PARTICLE, GibParticleBase.Factory::new);
-
-        ParticleFactoryRegistry.getInstance().register(ModParticles.SOUND_WAVE_PARTICLE, SoundWaveParticle.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.GLOWING_SHARD_PARTICLE, GibParticleBase.Factory::new);
     }
 }

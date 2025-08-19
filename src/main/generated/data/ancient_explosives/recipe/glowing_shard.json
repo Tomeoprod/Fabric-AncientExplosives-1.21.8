@@ -2,16 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "b": "minecraft:slime_ball",
+    "d": "minecraft:glowstone_dust",
     "s": "minecraft:echo_shard"
   },
   "pattern": [
-    "   ",
-    " s ",
-    "sbs"
+    " d ",
+    "dsd",
+    " d "
   ],
   "result": {
-    "count": 3,
-    "id": "ancient_explosives:echo_shard_cluster"
+    "count": 1,
+    "id": "ancient_explosives:glowing_shard"
   }
 }

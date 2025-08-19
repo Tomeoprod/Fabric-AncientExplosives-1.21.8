@@ -1,6 +1,5 @@
 package net.tomeoprod.ancient_explosives.item.custom;
 
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
@@ -21,19 +20,20 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.tomeoprod.ancient_explosives.AncientExplosives;
 import net.tomeoprod.ancient_explosives.block.ModBlocks;
 import net.tomeoprod.ancient_explosives.block.custom.EchoCrystalBlock;
 import net.tomeoprod.ancient_explosives.block.custom.EchoTntBlock;
+import net.tomeoprod.ancient_explosives.entity.custom.GlowingShardClusterProjectileEntity;
 import net.tomeoprod.ancient_explosives.networking.packet.BlockOutlineRenderingS2CPacket;
 import net.tomeoprod.ancient_explosives.networking.packet.EntityOutlineRenderingS2CPacket;
-import net.tomeoprod.ancient_explosives.util.OutlineUtils;
+import net.tomeoprod.ancient_explosives.networking.packet.FlashRenderingS2CPacket;
 import net.tomeoprod.ancient_explosives.entity.custom.EchoShardClusterProjectileEntity;
 import net.tomeoprod.ancient_explosives.item.ModItems;
 import net.tomeoprod.ancient_explosives.particle.ModParticles;
 import net.tomeoprod.ancient_explosives.util.ExplosionUtils;
 import net.tomeoprod.ancient_explosives.util.ModDamageTypes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -100,6 +100,7 @@ public class EchoAmplifierItem extends Item {
                 int i = MathHelper.floor(vec3d2.length()) + 7;
                 List<LivingEntity> livingEntities = null;
                 List<EchoShardClusterProjectileEntity> echoShardClusters = null;
+                List<GlowingShardClusterProjectileEntity> glowingShardClusters = null;
 
                 serverWorld.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.UI_BUTTON_CLICK, SoundCategory.NEUTRAL, 0.5f, 1);
 
@@ -116,6 +117,11 @@ public class EchoAmplifierItem extends Item {
                     if (echoShardClusters == null) {
                         echoShardClusters = echoShardClustersTemp;
                     } else echoShardClusters.addAll(echoShardClustersTemp);
+                    
+                    List<GlowingShardClusterProjectileEntity> glowingShardClustersTemp = serverWorld.getEntitiesByClass(GlowingShardClusterProjectileEntity.class, box, glowingShardClusterProjectileEntity -> true);
+                    if (glowingShardClusters == null) {
+                        glowingShardClusters = glowingShardClustersTemp;
+                    } else glowingShardClusters.addAll(glowingShardClustersTemp);
 
                     for (int x = (int) box.minX; x <= (int) box.maxX; x++) {
                         for (int y = (int) box.minY; y <= (int) box.maxY; y++) {
@@ -123,7 +129,7 @@ public class EchoAmplifierItem extends Item {
                                 BlockPos pos = new BlockPos(x, y, z);
                                 BlockState state = world.getBlockState(pos);
                                 if (state.getBlock() instanceof EchoCrystalBlock) {
-                                    serverWorld.spawnParticles(ModParticles.SCULK_PARTICLE, x + 0.5, y + 0.5, z + 0.5, 900, 0, 0.5, 0, 0.1);
+                                    serverWorld.spawnParticles(ModParticles.ECHO_SHARD_PARTICLE, x + 0.5, y + 0.5, z + 0.5, 900, 0, 0.5, 0, 0.1);
 
                                     serverWorld.playSound(null, x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1f, 1.25f);
                                     serverWorld.playSound(null, x, y, z, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
@@ -132,7 +138,6 @@ public class EchoAmplifierItem extends Item {
                                     ExplosionUtils.applyShards(x, y, z, serverWorld, 14);
 
                                     serverWorld.removeBlock(pos, false);
-                                    return ActionResult.SUCCESS;
                                 }
                             }
                         }
@@ -144,7 +149,7 @@ public class EchoAmplifierItem extends Item {
                                 BlockPos pos = new BlockPos(x, y, z);
                                 BlockState state = world.getBlockState(pos);
                                 if (state.getBlock() == ModBlocks.ECHO_TNT) {
-                                    serverWorld.spawnParticles(ModParticles.SCULK_PARTICLE, x + 0.5, y + 0.5, z + 0.5, 900, 0, 0.5, 0, 0.1);
+                                    serverWorld.spawnParticles(ModParticles.ECHO_SHARD_PARTICLE, x + 0.5, y + 0.5, z + 0.5, 900, 0, 0.5, 0, 0.1);
 
                                     serverWorld.playSound(null, x, y, z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1f, 1.25f);
                                     serverWorld.playSound(null, x, y, z, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
@@ -154,7 +159,6 @@ public class EchoAmplifierItem extends Item {
                                     EchoTntBlock.explode(serverWorld, user, x, y, z);
 
                                     serverWorld.removeBlock(pos, false);
-                                    return ActionResult.SUCCESS;
                                 }
                             }
                         }
@@ -163,7 +167,7 @@ public class EchoAmplifierItem extends Item {
 
                 if (echoShardClusters != null) {
                     for (EchoShardClusterProjectileEntity echoShardCluster : echoShardClusters) {
-                        serverWorld.spawnParticles(ModParticles.SCULK_PARTICLE, echoShardCluster.getX(), echoShardCluster.getY(), echoShardCluster.getZ(), 100, 0, 0.5, 0, 0.1);
+                        serverWorld.spawnParticles(ModParticles.ECHO_SHARD_PARTICLE, echoShardCluster.getX(), echoShardCluster.getY(), echoShardCluster.getZ(), 100, 0, 0.5, 0, 0.1);
 
                         serverWorld.playSound(echoShardCluster, echoShardCluster.getX(), echoShardCluster.getY(), echoShardCluster.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1f, 1.25f);
                         serverWorld.playSound(echoShardCluster, echoShardCluster.getX(), echoShardCluster.getY(), echoShardCluster.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
@@ -172,33 +176,67 @@ public class EchoAmplifierItem extends Item {
                         ExplosionUtils.applyShards(echoShardCluster.getX(), echoShardCluster.getY(), echoShardCluster.getZ(), serverWorld, 14);
 
                         echoShardCluster.discard();
-                        return ActionResult.SUCCESS;
+                    }
+                }
+                
+                if (glowingShardClusters != null) {
+                    for (GlowingShardClusterProjectileEntity glowingShardCluster : glowingShardClusters) {
+                        serverWorld.spawnParticles(ModParticles.GLOWING_SHARD_PARTICLE, glowingShardCluster.getX(), glowingShardCluster.getY(), glowingShardCluster.getZ(), 100, 0, 0.5, 0, 0.1);
+
+                        serverWorld.playSound(glowingShardCluster, glowingShardCluster.getX(), glowingShardCluster.getY(), glowingShardCluster.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1f, 1.25f);
+                        serverWorld.playSound(glowingShardCluster, glowingShardCluster.getX(), glowingShardCluster.getY(), glowingShardCluster.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
+                        serverWorld.playSound(glowingShardCluster, glowingShardCluster.getX(), glowingShardCluster.getY(), glowingShardCluster.getZ(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.NEUTRAL, 4f, 0.6f);
+                        
+                        ExplosionUtils.flashArea(glowingShardCluster);
+                        
+                        glowingShardCluster.discard();
                     }
                 }
 
                 if (livingEntities != null) {
                     for (LivingEntity target : livingEntities) {
                         int echoShardClustersStuck = target.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("echo_shard_clusters_stuck", 0);
+                        int glowingShardClustersStuck = target.get(DataComponentTypes.CUSTOM_DATA).copyNbt().getInt("glowing_shard_clusters_stuck", 0);
 
                         if (target != user && echoShardClustersStuck > 0) {
                             if (target.getHealth() < 7 * echoShardClustersStuck) {
                                 ExplosionUtils.implode(target, serverWorld);
                             } else {
+                                serverWorld.spawnParticles(ModParticles.ECHO_SHARD_PARTICLE, target.getX(), target.getY(), target.getZ(), 100, 0, 0.5, 0, 0.1);
 
+                                serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1f, 1.25f);
+                                serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
+                                serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.NEUTRAL, 4f, 0.6f);
+                                
                                 target.damage(serverWorld, serverWorld.getDamageSources().create(ModDamageTypes.IMPLODE_DAMAGE_KEY, user), 7 * echoShardClustersStuck);
                                 NbtCompound nbtCompound = new NbtCompound();
                                 nbtCompound.putInt("echo_shard_clusters_stuck", 0);
                                 target.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
                             }
                             ExplosionUtils.applyShards(target.getX(), target.getY(), target.getZ(), serverWorld, 14);
+                        }
+                        
+                        if (target != user && glowingShardClustersStuck > 0) {
+                            if (target instanceof PlayerEntity player) {
+                                ExplosionUtils.flashPlayer(player, 10);
+                            }
 
-                            return ActionResult.SUCCESS;
+                            serverWorld.spawnParticles(ModParticles.GLOWING_SHARD_PARTICLE, target.getX(), target.getY(), target.getZ(), 100, 0, 0.5, 0, 0.1);
+
+                            serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1f, 1.25f);
+                            serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 4f, 0.6f);
+                            serverWorld.playSound(target, target.getX(), target.getY(), target.getZ(), SoundEvents.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.NEUTRAL, 4f, 0.6f);
+
+                            ExplosionUtils.flashArea(target);
+                            NbtCompound nbtCompound = new NbtCompound();
+                            nbtCompound.putInt("glowing_shard_clusters_stuck", 0);
+                            target.setComponent(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(nbtCompound));
                         }
                     }
                 }
                 user.incrementStat(Stats.USED.getOrCreateStat(this));
             }
         }
-        return ActionResult.PASS;
+        return ActionResult.SUCCESS;
     }
 }

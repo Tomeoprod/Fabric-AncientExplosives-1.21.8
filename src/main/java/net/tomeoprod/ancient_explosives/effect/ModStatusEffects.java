@@ -9,6 +9,7 @@ import net.tomeoprod.ancient_explosives.AncientExplosives;
 
 public class ModStatusEffects {
     public static final RegistryEntry<StatusEffect> SHARDS = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(AncientExplosives.MOD_ID, "shards"), new ShardsEffect());
-
+    public static final RegistryEntry<StatusEffect> STUNNED = Registry.registerReference(Registries.STATUS_EFFECT, Identifier.of(AncientExplosives.MOD_ID, "stunned"), new StunnedEffect());
+    
     public static void register() {}
 }

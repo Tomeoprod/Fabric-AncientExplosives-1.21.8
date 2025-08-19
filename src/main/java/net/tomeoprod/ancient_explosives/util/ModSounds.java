@@ -9,6 +9,7 @@ import net.tomeoprod.ancient_explosives.AncientExplosives;
 public class ModSounds {
     public static final SoundEvent YAY = registerSound("yay");
     public static final SoundEvent BALLOON_POP = registerSound("balloon_pop");
+    public static final SoundEvent RING = registerSound("ring");
 
     private static SoundEvent registerSound(String id) {
         Identifier identifier = Identifier.of(AncientExplosives.MOD_ID, id);

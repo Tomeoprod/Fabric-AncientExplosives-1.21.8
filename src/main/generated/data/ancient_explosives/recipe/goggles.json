@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": "minecraft:tinted_glass",
+    "l": "minecraft:leather",
+    "s": "minecraft:string"
+  },
+  "pattern": [
+    "sss",
+    "s s",
+    "glg"
+  ],
+  "result": {
+    "count": 1,
+    "id": "ancient_explosives:goggles"
+  }
+}

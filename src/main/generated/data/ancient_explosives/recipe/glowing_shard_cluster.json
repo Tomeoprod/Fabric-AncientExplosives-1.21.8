@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "b": "minecraft:slime_ball",
-    "s": "minecraft:echo_shard"
+    "s": "ancient_explosives:glowing_shard"
   },
   "pattern": [
     "   ",
@@ -12,6 +12,6 @@
   ],
   "result": {
     "count": 3,
-    "id": "ancient_explosives:echo_shard_cluster"
+    "id": "ancient_explosives:glowing_shard_cluster"
   }
 }

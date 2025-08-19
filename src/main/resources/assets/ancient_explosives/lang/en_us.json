@@ -5,6 +5,10 @@
   "item.ancient_explosives.echo_crystal": "Echo Crystal",
   "item.ancient_explosives.echo_tnt": "Echo TNT",
   "item.ancient_explosives.warden_heart": "Warden Heart",
+  "item.ancient_explosives.glowing_shard_cluster": "Glowing Shard Cluster",
+  "item.ancient_explosives.glowing_shard": "Glowing Shard",
+  "item.ancient_explosives.goggles": "Goggles",
+
 
 
   "itemgroup.tomeoprodssorcery.ancient_explosives": "Ancient Explosives",
@@ -12,9 +16,11 @@
   "block.ancient_explosives.echo_crystal": "Echo Crystal",
 
   "entity.ancient_explosives.echo_shard_cluster": "Echo Shard Cluster",
+  "entity.ancient_explosives.glowing_shard_cluster": "Glowing Shard Cluster",
 
   "subtitles.yay": "yay",
   "subtitles.pop": "pop",
+  "subtitles.ring": "ring",
 
   "death.attack.implode": "%1$s Imploded",
   "death.attack.implode.player": "%1$s died whilst trying to escape %2$s",
@@ -24,6 +30,7 @@
   "death.attack.internal_bleeding.item": "%1$s was killed by %2$s using %3$s",
 
   "effect.ancient_explosives.shards": "Shards",
+  "effect.ancient_explosives.stunned": "Stunned",
 
   "key.ancient_explosives.chestplate_activation": "Chestplate Activation",
   "key.category.ancient_explosives": "Ancient Explosives",
